@@ -1,0 +1,76 @@
+version: '3.7'
+
+networks:
+  backend:
+  frontend:
+
+services:
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: backend.dockerfile
+      args:
+        DJANGO_ENV: development
+    depends_on:
+      - mysql
+    command: "poetry run python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/usr/src/app
+    ports:
+      - "8000:8000"
+    networks:
+      - backend
+      - frontend
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: frontend.dockerfile
+    ports:
+      - '8080:80'
+    volumes:
+      - ./frontend:/usr/src/app
+    networks:
+      - frontend
+
+  mysql:
+    image: 'mysql/mysql-server:8.0'
+    container_name: mysql
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    command: --max_allowed_packet=200M
+    volumes:
+      - ./volumes/mysql:/var/lib/mysql:rw
+    networks:
+      - backend
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    volumes:
+      - ./config/phpmyadmin.ini:/usr/local/etc/php/conf.d/phpmyadmin-misc.ini
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+      UPLOAD_LIMIT: 2048M
+      MEMORY_LIMIT: 2048M
+      MAX_EXECUTION_TIME: 300
+      MAX_ALLOWED_PACKET: 200M
+    restart: always
+    ports:
+      - 8081:80
+    networks:
+      - backend
+
