@@ -1,8 +1,5 @@
 <div align="center">
-  <h1 align="center">Project Auth</h1>
-
-<h3 align="center">Django Rest API - Vue 3 - MySQL - Firebase</h3>
-
+  <h1 align="center">Django Rest API - Vue 3 - MySQL - Firebase</h1>
 </div>
 
 <!-- TABLE OF CONTENTS -->
