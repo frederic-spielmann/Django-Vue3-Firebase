@@ -28,6 +28,7 @@ Web Application with a simple CRUD example (Movie) and Firebase Authentication.
 * Firebase
   * Create / Delete a User account (Firebase + local DB MySQL)
   * Login / Logout
+  * Reset a password
   * Update a User Profile (Display Name, Email, Password, Avatar)
 * CRUD
   * Create / Update / Delete a Movie
