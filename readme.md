@@ -33,7 +33,7 @@ Web Application with a simple CRUD example (Movie) and Firebase Authentication.
 * CRUD
   * Create / Update / Delete a Movie
   * List all Movies
-  * Detailed Movie
+  * Movie details
 
 ### Example :
 <img src="https://raw.githubusercontent.com/frederic-spielmann/Django-Vue3-Firebase/main/screenshots/login.png" width="45%"></img> 
